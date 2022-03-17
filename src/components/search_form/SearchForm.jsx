@@ -4,9 +4,15 @@ import React, { useState } from "react";
 export function SearchForm(props) {
   const [inputValue, setInputValue] = useState('');
 
+  const handleSubmit = function(event) {
+    event.preventDefault();
+    props.onSubmit(inputValue);
+    setInputValue('');
+  }
+
   return (
-    <form action="" onSubmit={props.onSubmit} className="search">
-      <SearchInput value={ inputValue } onChange={ setInputValue } ></SearchInput> 
+    <form action="" onSubmit={handleSubmit} className="search">
+      <SearchInput value={ inputValue } onChange={ (e) => { setInputValue(e.target.value) } } ></SearchInput> 
     </form>
   )
 }
