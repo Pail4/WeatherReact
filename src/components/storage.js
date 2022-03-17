@@ -1,13 +1,13 @@
 export const weatherNow = {
-  locationName: "",
-  temperature : "",
-  feelsLike: "",
-  weather: "",
+  cityName: "Perm",
+  temperature : "12",
+  feelsLike: "13",
+  weather: "cloud",
   weatherIcon: "",
-  sunrise: "",
-  sunset: "",
-  locationList : [],
-  liked() { return this.locationList.includes(this.locationName) },
+  sunrise: "8:00",
+  sunset: "19:30",
+  likedCities : [],
+  liked() { return this.likedCities.includes(this.locationName) },
   push() { localStorage.setItem("currentTimeData", JSON.stringify(this)) },
   get() {
       let data = JSON.parse( localStorage.getItem("currentTimeData") );
