@@ -29,7 +29,6 @@ function App(){
 
   }
 
-
   const removeCity = function(name){
     likedCities = likedCities.filter( (city) => {
       return city.props.value !== name;
@@ -41,7 +40,7 @@ function App(){
   }
 
   const addCity = function(city) {
-    likedCities.push(<LikedLocation key={city} value={city} removeCity={removeCity} ></LikedLocation>);
+    likedCities.push(<LikedLocation key={city} value={city} removeCity={removeCity} chooseCity={findCity} ></LikedLocation>);
     let newWeather = {};
     Object.assign(newWeather, storage);
     newWeather.likedCities = likedCities;

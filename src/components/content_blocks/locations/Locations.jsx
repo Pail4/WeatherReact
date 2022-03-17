@@ -20,14 +20,18 @@ export function Locations(props) {
 }
 
 export function LikedLocation(props) {
-
+  const { value, removeCity, chooseCity } = props
   const deleteCity = function(){
-    props.removeCity(props.value);
+    removeCity(value);
+  }
+
+  const handleCityClick = function() {
+    chooseCity(value);
   }
 
   return (
     <li>
-      <input type="button" className="liked-location" value={props.value} />
+      <input type="button" className="liked-location" value={value} onClick={handleCityClick} />
       <button className="delete-location" onClick={deleteCity}></button>
     </li>
   )

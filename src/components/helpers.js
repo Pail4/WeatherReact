@@ -4,7 +4,7 @@ export function getParsedWeather(fromObj, cityName){
   const targetObj = {};
   targetObj.cityName = cityName;
   targetObj.temperature = Math.round(fromObj.main.temp);
-  targetObj.feelsLike = fromObj.main["feels_like"];
+  targetObj.feelsLike = Math.round(fromObj.main["feels_like"]);
   targetObj.weather = fromObj.weather[0].main;
   targetObj.sunrise = parseTime(fromObj.sys.sunrise);
   targetObj.sunset = parseTime(fromObj.sys.sunset);

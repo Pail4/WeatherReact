@@ -22,7 +22,7 @@ export function Weather(props) {
   return (
     <div className="weather">
       <TabNow isActive={ selectedTab[0] } params={params} addCity={props.addCity} removeCity={props.removeCity} ></TabNow>
-      <TabDetails isActive={ selectedTab[1] } ></TabDetails>
+      <TabDetails isActive={ selectedTab[1] } params={params} ></TabDetails>
       <TabForecast  isActive={ selectedTab[2] } ></TabForecast>
       <TabsNav changeTab={changeTab} selectedTab={ selectedTab } ></TabsNav>
     </div>
