@@ -25,8 +25,8 @@ function App(){
     newWeatherNow.isLiked = isCityInList(cityName);
     
     setStorage(newWeatherNow);
-    //const _newForecast = await getWeather(cityName, 'forecast');
 
+    //const _newForecast = await getWeather(cityName, 'forecast');
   }
 
   const isCityInList = function(cityName){
@@ -52,9 +52,6 @@ function App(){
   }
 
   const addCity = function(cityName) {
-    const _likedCities = likedCities.slice();
-    _likedCities.push(<LikedLocation key={cityName} value={cityName} removeCity={removeCity} chooseCity={findCity} ></LikedLocation>);
-
     setLikedCities( (_likedCities) => {
       const arr = _likedCities.slice();
       arr.push(<LikedLocation key={cityName} value={cityName} removeCity={removeCity} chooseCity={findCity} ></LikedLocation>);

@@ -5,7 +5,7 @@ import { WeatherImg, LocationName, Temp } from './elements/elements'
 
 export function TabNow(props) {
   const { isActive, params, onLikeClick } = props;
-  const { cityName, temperature, weatherIcon, weather } = params;
+  const { cityName, temperature, weatherIcon, weather, isLiked } = params;
 
 
 
@@ -17,7 +17,7 @@ export function TabNow(props) {
         </div>
         <div className="bottom">
             <LocationName value={cityName}></LocationName>
-            <input type="button" name="like" className={"like-btn" + (true ? " active" : '')} id="likeBtn" onClick={ () => {onLikeClick(cityName)} } />
+            <input type="button" name="like" className={"like-btn" + " active".repeat(isLiked)} id="likeBtn" onClick={ () => {onLikeClick(cityName)} } />
         </div>
     </div>
   ) : null
