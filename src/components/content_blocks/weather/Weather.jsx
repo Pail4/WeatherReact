@@ -17,11 +17,9 @@ export function Weather(props) {
     setSelectedTab(select);
   }
 
-
-
   return (
     <div className="weather">
-      <TabNow isActive={ selectedTab[0] } params={params} addCity={props.addCity} removeCity={props.removeCity} ></TabNow>
+      <TabNow isActive={ selectedTab[0] } params={params} onLikeClick={props.onLikeClick} ></TabNow>
       <TabDetails isActive={ selectedTab[1] } params={params} ></TabDetails>
       <TabForecast  isActive={ selectedTab[2] } ></TabForecast>
       <TabsNav changeTab={changeTab} selectedTab={ selectedTab } ></TabsNav>

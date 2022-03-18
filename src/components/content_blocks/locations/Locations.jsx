@@ -21,6 +21,7 @@ export function Locations(props) {
 
 export function LikedLocation(props) {
   const { value, removeCity, chooseCity } = props
+  
   const deleteCity = function(){
     removeCity(value);
   }

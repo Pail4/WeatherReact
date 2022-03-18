@@ -29,17 +29,31 @@ function App(){
 
   }
 
-  const removeCity = function(name){
+  const isCityInList = function(cityName){
+    return !!likedCities.find( (city) => {
+      return city.props.value === cityName;
+    } )
+  }
+
+  const handleLikeClick = function(cityName){
+    if ( isCityInList(cityName) ){
+      removeCity(cityName);
+    } else {
+      addCity(cityName);
+    }
+  }
+
+  const removeCity = function(cityName){
     const _likedCities = likedCities.filter( (city) => {
-      return city.props.value !== name;
+      return city.props.value !== cityName;
     } );
 
     setLikedCities(_likedCities);
   }
 
-  const addCity = function(city) {
+  const addCity = function(cityName) {
     const _likedCities = likedCities.slice();
-    _likedCities.push(<LikedLocation key={city} value={city} removeCity={removeCity} chooseCity={findCity} ></LikedLocation>);
+    _likedCities.push(<LikedLocation key={cityName} value={cityName} removeCity={removeCity} chooseCity={findCity} ></LikedLocation>);
 
     setLikedCities(_likedCities);
   }
@@ -49,7 +63,7 @@ function App(){
       <SearchForm onSubmit={ findCity }></SearchForm>
 
       <div className="blocks">
-        <Weather addCity={addCity} removeCity={removeCity} params={ storage }></Weather>
+        <Weather params={ storage } onLikeClick={handleLikeClick} ></Weather>
         <Locations likedCities={likedCities}></Locations>
       </div>
     </div>
