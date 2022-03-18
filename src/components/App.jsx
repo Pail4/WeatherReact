@@ -12,7 +12,8 @@ import { getParsedWeather } from './helpers'
 
 function App(){
   const [storage, setStorage] = useState(weatherNow);
-  let likedCities = storage.likedCities;
+  const [likedCities, setLikedCities] = useState([]);
+  //let likedCities = storage.likedCities;
 
   const findCity = function(cityName) {
     setWeather(cityName);
@@ -21,30 +22,26 @@ function App(){
   const setWeather = async function(cityName){
     const _newWeatherNow = await getWeather(cityName, 'weatherNow');
     const newWeatherNow = getParsedWeather(_newWeatherNow, cityName);
-    newWeatherNow.likedCities = likedCities;
+    newWeatherNow.likedCities = likedCities.slice();
     
     setStorage(newWeatherNow);
-    
     //const _newForecast = await getWeather(cityName, 'forecast');
 
   }
 
   const removeCity = function(name){
-    likedCities = likedCities.filter( (city) => {
+    const _likedCities = likedCities.filter( (city) => {
       return city.props.value !== name;
     } );
-    let newWeather = {};
-    Object.assign(newWeather, storage);
-    newWeather.likedCities = likedCities;
-    setStorage(newWeather);
+
+    setLikedCities(_likedCities);
   }
 
   const addCity = function(city) {
-    likedCities.push(<LikedLocation key={city} value={city} removeCity={removeCity} chooseCity={findCity} ></LikedLocation>);
-    let newWeather = {};
-    Object.assign(newWeather, storage);
-    newWeather.likedCities = likedCities;
-    setStorage(newWeather);
+    const _likedCities = likedCities.slice();
+    _likedCities.push(<LikedLocation key={city} value={city} removeCity={removeCity} chooseCity={findCity} ></LikedLocation>);
+
+    setLikedCities(_likedCities);
   }
 
   return (
