@@ -1,38 +1,41 @@
 /* eslint-disable react/prop-types */
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 
-import { ParamsList, WeatherImg } from './elements/elements'
+import { WeatherImg } from './elements/elements'
 
 export function TabForecast(props) {
-  const { isActive } = props;
-  const timeBlockList = [<TimeBlock key="1"></TimeBlock>]
+  const { isActive, cityName, blockList } = props;
 
   return isActive ? (
     <div className="tab tab-forecast active" id="tab03">
-      <div className="location-name"></div>
+      <div className="location-name">{cityName || 'oaoaoa'}</div>
       <div className="time-block-list">
-        {timeBlockList}
+        {blockList}
       </div>
     </div>
   ) : null;
 }
 
-function TimeBlock(props) {
-  const { date, time, params, weather } = props;
-  
+export function TimeBlock(props) {
+  const { date, time, params } = props;
+  const { weatherIcon, weather, temperature, feelsLike } = params;
+
   return (
     <div className="time-block">
       <div className="time-block_top">
-        <div className="date"></div>
-        <div className="time"></div>
+        <div className="date">{date}</div>
+        <div className="time">{time}</div>
       </div>
       <div className="time-block_bot">
         <div className="params">
-          <ParamsList show={ props.params } ulClass='' ></ParamsList>
+          <ul type="none">
+            <li>Temperature: <span className="temp grad">{temperature}</span></li>
+            <li>Feels like: <span className="feels-like grad">{feelsLike}</span></li>
+          </ul>
         </div>
         <div className="time-block-weather">
-          <div className="time-weather-name"></div>
-          <WeatherImg></WeatherImg>
+          <div className="time-weather-name">{weather}</div>
+          <WeatherImg src={weatherIcon} alt={weather}></WeatherImg>
         </div>
       </div>
     </div>

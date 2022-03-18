@@ -8,10 +8,11 @@ import { Locations, LikedLocation } from './content_blocks/locations/Locations'
 
 import { weatherNow } from './storage'
 import { getWeather } from './API'
-import { getParsedWeather } from './helpers'
+import { getParsedWeather, getForecastList } from './helpers'
 
 function App() {
   const [storage, setStorage] = useState(weatherNow);
+  const [forecast, setForecast] = useState([]);
   //let likedCities = storage.likedCities;
 
   const findCity = function (cityName) {
@@ -27,6 +28,11 @@ function App() {
       newWeatherNow.isLiked = isCityInList(cityName, _storage.likedCities);
       return newWeatherNow;
     });
+    
+    const _newForecast = await getWeather(cityName, 'forecast');
+    const newForecast = getForecastList(_newForecast, cityName);
+    console.dir(newForecast);
+    setForecast(newForecast);
   }
 
   const isCityInList = function (cityName, list) {
@@ -71,7 +77,7 @@ function App() {
       <SearchForm onSubmit={findCity}></SearchForm>
 
       <div className="blocks">
-        <Weather params={storage} onLikeClick={handleLikeClick} ></Weather>
+        <Weather params={storage} blockList={forecast} onLikeClick={handleLikeClick} ></Weather>
         <Locations likedCities={storage.likedCities}></Locations>
       </div>
     </div>
