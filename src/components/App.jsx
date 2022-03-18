@@ -22,7 +22,7 @@ function App(){
   const setWeather = async function(cityName){
     const _newWeatherNow = await getWeather(cityName, 'weatherNow');
     const newWeatherNow = getParsedWeather(_newWeatherNow, cityName);
-    newWeatherNow.likedCities = likedCities.slice();
+    newWeatherNow.isLiked = isCityInList(cityName);
     
     setStorage(newWeatherNow);
     //const _newForecast = await getWeather(cityName, 'forecast');
@@ -44,18 +44,22 @@ function App(){
   }
 
   const removeCity = function(cityName){
-    const _likedCities = likedCities.filter( (city) => {
-      return city.props.value !== cityName;
+    setLikedCities( (_likedCities) => {
+      return _likedCities.filter( (city) => {
+        return city.props.value !== cityName;
+      } );  
     } );
-
-    setLikedCities(_likedCities);
   }
 
   const addCity = function(cityName) {
     const _likedCities = likedCities.slice();
     _likedCities.push(<LikedLocation key={cityName} value={cityName} removeCity={removeCity} chooseCity={findCity} ></LikedLocation>);
 
-    setLikedCities(_likedCities);
+    setLikedCities( (_likedCities) => {
+      const arr = _likedCities.slice();
+      arr.push(<LikedLocation key={cityName} value={cityName} removeCity={removeCity} chooseCity={findCity} ></LikedLocation>);
+      return arr;
+    } );
   }
 
   return (

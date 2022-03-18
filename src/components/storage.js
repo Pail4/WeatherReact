@@ -6,7 +6,7 @@ export const weatherNow = {
   weatherIcon: "",
   sunrise: "8:00",
   sunset: "19:30",
-  liked() { return this.likedCities.includes(this.locationName) },
+  isLiked: true,
   push() { localStorage.setItem("currentTimeData", JSON.stringify(this)) },
   get() {
       let data = JSON.parse( localStorage.getItem("currentTimeData") );
