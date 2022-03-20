@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import '../styles/style.css'
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 
 import { SearchForm } from './search_form/SearchForm'
 import { Weather } from './content_blocks/weather/Weather'
@@ -11,15 +11,29 @@ import { getWeather } from './API'
 import { getParsedWeather, getForecastList } from './helpers'
 
 function App() {
-  const [storage, setStorage] = useState(weatherNow);
+  const [storage, setStorage] = useState(weatherNow.get(createCity));
   const [forecast, setForecast] = useState([]);
-  //let likedCities = storage.likedCities;
 
-  const findCity = function (cityName) {
+  useEffect(function saveStorage() {
+    try {
+      const _storage = {};
+      Object.assign(_storage, storage);
+      _storage.likedCities = _storage.likedCities.map( (city) => {
+        return city.props.value;
+      } );
+      console.log(_storage);
+      const data = JSON.stringify(_storage);
+      localStorage.setItem("storage", data);
+    } catch(err){
+      console.log(err);
+    }
+  });
+
+  function findCity(cityName) {
     setWeather(cityName);
   }
 
-  const setWeather = async function (cityName) {
+  async function setWeather(cityName) {
     const _newWeatherNow = await getWeather(cityName, 'weatherNow');
     const newWeatherNow = getParsedWeather(_newWeatherNow, cityName);
 
@@ -28,20 +42,19 @@ function App() {
       newWeatherNow.isLiked = isCityInList(cityName, _storage.likedCities);
       return newWeatherNow;
     });
-    
+
     const _newForecast = await getWeather(cityName, 'forecast');
     const newForecast = getForecastList(_newForecast, cityName);
-    console.dir(newForecast);
     setForecast(newForecast);
   }
 
-  const isCityInList = function (cityName, list) {
+  function isCityInList(cityName, list) {
     return !!list.find((city) => {
       return city.props.value === cityName;
     });
   }
 
-  const handleLikeClick = function (cityName) {
+  function handleLikeClick(cityName) {
     if (isCityInList(cityName, storage.likedCities)) {
       removeCity(cityName);
     } else {
@@ -49,7 +62,7 @@ function App() {
     }
   }
 
-  const removeCity = function (cityName) {
+  function removeCity(cityName) {
     setStorage((_storage) => {
       _storage.likedCities = _storage.likedCities.filter((city) => {
         return city.props.value !== cityName;
@@ -60,16 +73,20 @@ function App() {
     });
   }
 
-  const addCity = function (cityName) {
+  function addCity(cityName) {
     setStorage((_storage) => {
       const arr = _storage.likedCities.slice();
-      arr.push(<LikedLocation key={cityName} value={cityName} removeCity={removeCity} chooseCity={findCity}></LikedLocation>);
+      arr.push(createCity(cityName));
       const newStorage = {};
       Object.assign(newStorage, _storage)
       newStorage.likedCities = arr;
       newStorage.isLiked = true;
       return newStorage;
     });
+  }
+
+  function createCity(cityName) {
+    return <LikedLocation key={cityName} value={cityName} removeCity={removeCity} chooseCity={findCity}></LikedLocation>
   }
 
   return (

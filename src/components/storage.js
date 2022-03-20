@@ -1,20 +1,21 @@
 export const weatherNow = {
-  cityName: "Perm",
-  temperature : "12",
-  feelsLike: "13",
-  weather: "cloud",
-  weatherIcon: "",
-  sunrise: "8:00",
-  sunset: "19:30",
+  cityName: "City",
+  temperature: "",
+  feelsLike: "",
+  weather: "",
+  weatherIcon: "src/img/search.svg",
+  sunrise: "",
+  sunset: "",
   isLiked: true,
   likedCities: [],
-  push() { localStorage.setItem("currentTimeData", JSON.stringify(this)) },
-  get() {
-      let data = JSON.parse( localStorage.getItem("currentTimeData") );
-      for (const key in data) {
-          this[key] = data[key];
-      }
+  get(createCity){
+    try {
+      let data = JSON.parse(localStorage.getItem("storage"));
+      data.likedCities = data.likedCities.map( createCity );
+      return data || this;
+    } catch (error) {
+      console.log(error);
+      return this;
+    }
   }
 }
-
-export const weatherForecast = {};
