@@ -28,10 +28,6 @@ function App() {
     }
   });
 
-  function findCity(cityName) {
-    setWeather(cityName);
-  }
-
   async function setWeather(cityName) {
     const _newWeatherNow = await getWeather(cityName, 'weatherNow');
     const newWeatherNow = getParsedWeather(_newWeatherNow, cityName);
@@ -85,12 +81,12 @@ function App() {
   }
 
   function createCity(cityName) {
-    return <LikedLocation key={cityName} value={cityName} removeCity={removeCity} chooseCity={findCity}></LikedLocation>
+    return <LikedLocation key={cityName} value={cityName} removeCity={removeCity} chooseCity={setWeather}></LikedLocation>
   }
 
   return (
     <div className='wrapper'>
-      <SearchForm onSubmit={findCity}></SearchForm>
+      <SearchForm onSubmit={setWeather}></SearchForm>
 
       <div className="blocks">
         <Weather params={storage} blockList={forecast} onLikeClick={handleLikeClick} ></Weather>
