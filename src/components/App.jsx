@@ -21,7 +21,6 @@ function App() {
       _storage.likedCities = _storage.likedCities.map( (city) => {
         return city.props.value;
       } );
-      console.log(_storage);
       const data = JSON.stringify(_storage);
       localStorage.setItem("storage", data);
     } catch(err){

@@ -6,7 +6,7 @@ export const weatherNow = {
   weatherIcon: "src/img/search.svg",
   sunrise: "",
   sunset: "",
-  isLiked: true,
+  isLiked: false,
   likedCities: [],
   get(createCity){
     try {
