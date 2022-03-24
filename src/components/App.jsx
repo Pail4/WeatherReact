@@ -10,6 +10,8 @@ import { weatherNow } from './storage'
 import { getWeather } from './API'
 import { getParsedWeather, getForecastList } from './helpers'
 
+import { store } from '../store/store'
+
 function App() {
   const [storage, setStorage] = useState(weatherNow.get(createCity));
   const [forecast, setForecast] = useState([]);
