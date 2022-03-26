@@ -1,26 +1,26 @@
 import { createStore } from 'redux'
+import { setAllWeather } from '../components/helpers';
+import * as actions from './actions';
 
 import { reducer } from './reducers'
-//import * as actions from './actions' 
+
+const defaultCity = 'Perm'
 
 export const store = createStore(reducer);
 
-// console.log(store.getState());
+function getStorage(){
+  try {
+    let data = localStorage.getItem('storage');
+    if (!data)
+      setAllWeather(defaultCity);
+    data = JSON.parse(data);
+    store.dispatch(actions.setWeather(data.weather))
+    data.likedCities.forEach(city => {
+      store.dispatch(actions.addCity(city))
+    });
+  } catch (error) {
+    console.log(error)
+  }
+}
 
-// store.subscribe( () => console.log(store.getState() ) );
-
-// store.dispatch(actions.addCity('Perm'));
-// store.dispatch(actions.addCity('Votkinsk'));
-// store.dispatch(actions.removeCity('Votkinsk'));
-// store.dispatch(actions.setWeather(
-//   {
-//     cityName: "Perm",
-//     temperature: "12",
-//     feelsLike: "12",
-//     weather: "nice",
-//     weatherIcon: "./src/img/search.svg",
-//     sunrise: "12",
-//     sunset: "12",
-//     isLiked: false,
-//   }
-// ))
+getStorage();

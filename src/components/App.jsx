@@ -12,16 +12,19 @@ import { useSelector } from 'react-redux'
 function App() {
   const storage = useSelector(state => state);
 
-  useEffect(function saveStorage() {
+  useEffect(() => {
+      saveStorage();
+    }    
+  )
+
+  function saveStorage() {
     try {
-      const _storage = {};
-      Object.assign(_storage, storage);
-      const data = JSON.stringify(_storage);
+      const data = JSON.stringify(storage);
       localStorage.setItem("storage", data);
     } catch(err){
       console.log(err);
     }
-  });
+  }
 
   
   return (
