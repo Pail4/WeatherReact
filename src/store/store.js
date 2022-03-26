@@ -3,20 +3,6 @@ import { createStore } from 'redux'
 import { reducer } from './reducers'
 //import * as actions from './actions' 
 
-export const storeDefault = {
-  weather: {
-    cityName: "City",
-    temperature: "",
-    feelsLike: "",
-    weather: "",
-    weatherIcon: "./src/img/search.svg",
-    sunrise: "",
-    sunset: "",
-    isLiked: false,
-  },
-  likedCities: []
-}
-
 export const store = createStore(reducer);
 
 // console.log(store.getState());

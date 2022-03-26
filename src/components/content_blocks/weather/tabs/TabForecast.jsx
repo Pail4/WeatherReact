@@ -1,14 +1,28 @@
 /* eslint-disable react/prop-types */
 import React from 'react'
+import { useSelector } from 'react-redux';
 
 import { WeatherImg } from './elements/elements'
 
 export function TabForecast(props) {
-  const { isActive, cityName, blockList } = props;
+  const { isActive } = props;
+  const forecast = useSelector(state => state.forecast);
+  const cityName = useSelector(state => state.weather.cityName);
+
+  function createCityList(forecast){
+    if (!forecast)
+      return null;
+    return forecast.map( params => {
+      const { date, time, weather } = params;
+      return <TimeBlock key={date + ' ' + time} date={date} time={time} params={weather} ></TimeBlock>
+    } )
+  }
+
+  const blockList = createCityList(forecast);
 
   return isActive ? (
     <div className="tab tab-forecast active" id="tab03">
-      <div className="location-name">{cityName || 'oaoaoa'}</div>
+      <div className="location-name">{cityName}</div>
       <div className="time-block-list">
         {blockList}
       </div>
@@ -16,7 +30,7 @@ export function TabForecast(props) {
   ) : null;
 }
 
-export function TimeBlock(props) {
+function TimeBlock(props) {
   const { date, time, params } = props;
   const { weatherIcon, weather, temperature, feelsLike } = params;
 

@@ -1,7 +1,6 @@
 import { combineReducers } from 'redux'
 
 import { actions } from "./actions";
-//import { storeDefault } from "./store";
 
 const storeDefault = {
   weather: {
@@ -14,10 +13,11 @@ const storeDefault = {
     sunset: "",
     isLiked: false,
   },
+  forecast: [],
   likedCities: []
 }
 
-function likedCities(state = [], action){
+function likedCities(state = storeDefault.likedCities, action){
   switch (action.type) {
     case actions.ADD_CITY:
       return state.concat(action.cityName);
@@ -40,7 +40,18 @@ function weather(state = storeDefault.weather, action){
   }
 }
 
+function forecast(state = storeDefault.forecast, action){
+  switch (action.type) {
+    case actions.SET_FORECAST:
+      return [...action.forecast];
+
+    default:
+      return state;
+  }
+}
+
 export const reducer = combineReducers({
   weather,
+  forecast,
   likedCities,
 })

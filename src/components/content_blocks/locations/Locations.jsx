@@ -1,33 +1,44 @@
 /* eslint-disable react/prop-types */
 import React from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import * as actions from '../../../store/actions';
+import { setAllWeather } from '../../helpers';
 
 
+export function Locations() {
+  const likedCities = useSelector(state => state.likedCities);
 
-export function Locations(props) {
+  function createCityList(list){
+    return list.map(createCity);
+  }
 
-  const { likedCities } = props;
+  function createCity(cityName) {
+    return <LikedLocation key={cityName} value={cityName} ></LikedLocation>
+  }
 
   return (
     <div className="locations">
       <div className="block-name">Added locations:</div>
       <div className="locations-list">
         <ul type="none" className="locations-ul">
-          {likedCities}
+          {createCityList(likedCities)}
         </ul>
       </div>
     </div>
   )
 }
 
-export function LikedLocation(props) {
-  const { value, removeCity, chooseCity } = props
+function LikedLocation(props) {
+  const { value } = props;
+  const dispatch = useDispatch();
+
   
   const deleteCity = function(){
-    removeCity(value);
+    dispatch(actions.removeCity(value));
   }
 
   const handleCityClick = function() {
-    chooseCity(value);
+    setAllWeather(value)
   }
 
   return (

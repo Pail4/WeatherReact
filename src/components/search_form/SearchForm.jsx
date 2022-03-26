@@ -1,14 +1,16 @@
 /* eslint-disable react/prop-types */
 import React, { useState } from "react";
+import { setAllWeather } from "../helpers";
 
-export function SearchForm(props) {
+export function SearchForm() {
   const [inputValue, setInputValue] = useState('');
   const [typeError, setTypeError] = useState(false);
+  
 
   const handleSubmit = function(event) {
     event.preventDefault();
     if (inputValue.trim()){
-      props.onSubmit(inputValue);
+      setAllWeather(inputValue);
     } else {
       setTypeError(true);
       setTimeout( () => setTypeError(false), 1000 );

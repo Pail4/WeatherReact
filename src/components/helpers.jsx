@@ -1,8 +1,8 @@
-import React from 'react'
-import { getWeatherIcon } from "./API";
-import { TimeBlock } from "./content_blocks/weather/tabs/TabForecast";
+import { getWeatherIcon, getWeather } from "./API";
+import { store } from '../store/store'
+import * as actions from '../store/actions'
 
-export function getParsedWeather(fromObj, cityName) {
+function getParsedWeather(fromObj, cityName) {
   const targetObj = {};
   targetObj.cityName = cityName;
   targetObj.temperature = Math.round(fromObj.main.temp);
@@ -23,10 +23,40 @@ export function getForecastList(forecast, cityName) {
     const time = parseTime(item["dt"]);
     const weather = getParsedWeather(item, cityName);
     blocks.push( 
-      <TimeBlock key={date + ' ' + time} date={date} time={time} params={weather} ></TimeBlock>
+      {
+        date,
+        time,
+        weather
+      }
     );
   });
   return blocks;
+}
+
+export function setAllWeather(cityName){
+  setWeather(cityName);
+  setForecast(cityName);
+}
+
+async function setWeather(cityName){
+  const _newWeatherNow = await getWeather(cityName, 'weatherNow');
+  const newWeatherNow = getParsedWeather(_newWeatherNow, cityName);
+  newWeatherNow.isLiked = isCityInList(cityName, store.getState().likedCities);
+  store.dispatch(actions.setWeather(newWeatherNow));
+  return newWeatherNow;
+}
+
+async function setForecast(cityName) {
+  const _newForecast = await getWeather(cityName, 'forecast');
+  const newForecast = getForecastList(_newForecast, cityName);
+  store.dispatch(actions.setForecast(newForecast));
+}
+
+
+function isCityInList(cityName, list) {
+  return !!list.find((city) => {
+    return city === cityName;
+  });
 }
 
 function parseTime(timeUNIX) {

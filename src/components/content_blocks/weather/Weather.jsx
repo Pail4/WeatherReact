@@ -6,8 +6,7 @@ import { TabDetails } from './tabs/TabDetails'
 import { TabForecast } from './tabs/TabForecast'
 import { TabsNav } from './tabs/TabsNav'
 
-export function Weather(props) {
-  const { params } = props;
+export function Weather() {
   const [selectedTab, setSelectedTab] = useState([true, false, false]);
 
   const changeTab = function(number) {
@@ -19,9 +18,9 @@ export function Weather(props) {
 
   return (
     <div className="weather">
-      <TabNow isActive={ selectedTab[0] } params={params} onLikeClick={props.onLikeClick} ></TabNow>
-      <TabDetails isActive={ selectedTab[1] } params={params} ></TabDetails>
-      <TabForecast  isActive={ selectedTab[2] } cityName={params.cityName} blockList={props.blockList} ></TabForecast>
+      <TabNow isActive={ selectedTab[0] } ></TabNow>
+      <TabDetails isActive={ selectedTab[1] } ></TabDetails>
+      <TabForecast isActive={ selectedTab[2] } ></TabForecast>
       <TabsNav changeTab={changeTab} selectedTab={ selectedTab } ></TabsNav>
     </div>
   )
