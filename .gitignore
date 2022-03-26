@@ -12,6 +12,7 @@ dist
 build
 dist-ssr
 .eslintrc.js
+.eslintrc.json
 *.local
 
 # Editor directories and files

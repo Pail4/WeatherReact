@@ -2,6 +2,7 @@ export const actions = {
   ADD_CITY : 'ADD_CITY',
   REMOVE_CITY : 'REMOVE_CITY',
   SET_WEATHER : 'SET_WEATHER',
+  TOGGLE_LIKE : 'TOGGLE_LIKE',
   SET_FORECAST : 'SET_FORECAST',
 };
 

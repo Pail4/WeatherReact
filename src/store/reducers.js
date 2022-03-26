@@ -17,20 +17,20 @@ const storeDefault = {
   likedCities: []
 }
 
-function likedCities(state = storeDefault.likedCities, action){
+function likedCities(state = storeDefault.likedCities, action) {
   switch (action.type) {
     case actions.ADD_CITY:
       return state.concat(action.cityName);
 
     case actions.REMOVE_CITY:
       return state.filter((city) => city !== action.cityName);
-    
+
     default:
       return state;
   }
 }
 
-function weather(state = storeDefault.weather, action){
+function weather(state = storeDefault.weather, action) {
   switch (action.type) {
     case actions.SET_WEATHER:
       return Object.assign({}, action.weather || state);
@@ -40,7 +40,7 @@ function weather(state = storeDefault.weather, action){
   }
 }
 
-function forecast(state = storeDefault.forecast, action){
+function forecast(state = storeDefault.forecast, action) {
   switch (action.type) {
     case actions.SET_FORECAST:
       return [...action.forecast];
