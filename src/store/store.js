@@ -1,7 +1,7 @@
 import { createStore } from 'redux'
 
 import { reducer } from './reducers'
-import * as actions from './actions' 
+//import * as actions from './actions' 
 
 export const storeDefault = {
   weather: {
