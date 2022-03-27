@@ -2,7 +2,6 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import * as actions from '../../../store/actions';
-import { setAllWeather } from '../../helpers';
 
 
 export function Locations() {
@@ -44,7 +43,9 @@ function LikedLocation(props) {
   }
 
   const handleCityClick = function() {
-    setAllWeather(value)
+    dispatch(
+      actions.fetchData(value)
+    );
   }
 
   return (

@@ -1,8 +1,6 @@
-import { getWeatherIcon, getWeather } from "./API";
-import { store } from '../store/store'
-import * as actions from '../store/actions'
+import { getWeatherIcon } from "./API";
 
-function getParsedWeather(fromObj, cityName) {
+export function getParsedWeather(fromObj, cityName) {
   const targetObj = {};
   targetObj.cityName = cityName;
   targetObj.temperature = Math.round(fromObj.main.temp);
@@ -33,27 +31,7 @@ export function getForecastList(forecast, cityName) {
   return blocks;
 }
 
-export function setAllWeather(cityName){
-  setWeather(cityName);
-  setForecast(cityName);
-}
-
-async function setWeather(cityName){
-  const _newWeatherNow = await getWeather(cityName, 'weatherNow');
-  const newWeatherNow = getParsedWeather(_newWeatherNow, cityName);
-  newWeatherNow.isLiked = isCityInList(cityName, store.getState().likedCities);
-  store.dispatch(actions.setWeather(newWeatherNow));
-  return newWeatherNow;
-}
-
-async function setForecast(cityName) {
-  const _newForecast = await getWeather(cityName, 'forecast');
-  const newForecast = getForecastList(_newForecast, cityName);
-  store.dispatch(actions.setForecast(newForecast));
-}
-
-
-function isCityInList(cityName, list) {
+export function isCityInList(cityName, list) {
   return !!list.find((city) => {
     return city === cityName;
   });

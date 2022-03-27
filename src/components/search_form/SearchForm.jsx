@@ -1,16 +1,21 @@
 /* eslint-disable react/prop-types */
 import React, { useState } from "react";
-import { setAllWeather } from "../helpers";
+import { useDispatch } from "react-redux";
+import { fetchData } from "../../store/actions";
 
 export function SearchForm() {
   const [inputValue, setInputValue] = useState('');
   const [typeError, setTypeError] = useState(false);
+
+  const dispatch = useDispatch();
   
 
   const handleSubmit = function(event) {
     event.preventDefault();
     if (inputValue.trim()){
-      setAllWeather(inputValue);
+      dispatch(
+        fetchData(inputValue)
+      );
     } else {
       setTypeError(true);
       setTimeout( () => setTypeError(false), 1000 );
